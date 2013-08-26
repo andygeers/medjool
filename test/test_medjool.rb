@@ -44,4 +44,10 @@ class TestMedjool < TestCase
     assert_equal "2013-08-27".to_date, Medjool.parse("Tuesday", {:now => "2013-08-27".to_date})
     assert_equal "2013-09-03".to_date, Medjool.parse("Tuesday", {:now => "2013-08-28".to_date})
   end
+
+  def test_absolute_dates
+    parser = Medjool::Parser.new
+    assert_equal "2013-07-06".to_date, parser.parse("06/07/2013")
+    assert_equal "2013-07-06".to_date, parser.parse("06/07/2013")
+  end
 end

@@ -22,6 +22,9 @@ class Medjool::Parser
         now = @context[:now].to_date
 
         case ambiguity
+          when :none
+            return base_date
+
           when :weekly
             # Pick the nearest week that meets the context
             guess_date = now + (base_date.wday - now.wday).days - 1.week
