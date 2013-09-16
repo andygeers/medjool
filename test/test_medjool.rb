@@ -12,7 +12,7 @@ class TestMedjool < TestCase
   end
 
   def test_parse_without_context
-    @variations = ["Monday", "1st July", "2nd July 2010", "1 July 2009", "Monday 2nd July 2009", "Monday 2nd", "Monday 2", "Monday 2 July"]
+    @variations = ["Thu", "Monday", "1st July", "2nd July 2010", "1 July 2009", "Monday 2nd July 2009", "Monday 2nd", "Monday 2", "Monday 2 July"]
     @variations.each do |t|
       assert_equal Date.parse(t), Medjool.parse(t)
     end
