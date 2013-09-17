@@ -1,5 +1,5 @@
 module Medjool
-  VERSION = 0.2.1
+  VERSION = 0.3
 
   require 'medjool/parser'
   require 'medjool/regexs'
