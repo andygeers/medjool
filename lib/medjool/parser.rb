@@ -8,7 +8,29 @@ class Medjool::Parser
     @context = context
   end
 
-  def parse(text)
+  def is_date_range?(text)
+    return Medjool::DATE_RANGE_MATCHER.match(text.strip).present?
+  end
+
+  def parse_date_range(text)
+    if bits = Medjool::DATE_RANGE_MATCHER.match(text.strip)
+      if bits[14]
+        # October
+        month_start = self.parse(text, update_now = false)
+        month_end = month_start.end_of_month
+        return Medjool::DateRange.new(month_start, month_end)
+      elsif bits[1]
+        # 12-15 Oct
+        # Start is 12 Oct
+        range_start = self.parse("#{bits[2]} #{bits[4]}", update_now = false)
+        # End is 15 Oct
+        range_end = self.parse("#{bits[3]} #{bits[4]}", update_now = false)
+        return Medjool::DateRange.new(range_start, range_end)
+      end
+    end
+  end
+
+  def parse(text, update_now = true)
     if Medjool::DATE_MATCHER.match(text)
       base_date = Date.parse(text)
 
@@ -63,7 +85,7 @@ class Medjool::Parser
         end
       end
 
-      @context[:now] = guess_date
+      @context[:now] = guess_date if update_now
       return guess_date
     else
       return nil

@@ -2,6 +2,7 @@ module Medjool
   VERSION = 0.3
 
   require 'medjool/parser'
+  require 'medjool/date_range'
   require 'medjool/regexs'
 
   class << self
