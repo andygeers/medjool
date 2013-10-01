@@ -57,6 +57,7 @@ class TestMedjool < TestCase
     assert parser.is_date_range?("12-15 Jan")
     assert !parser.is_date_range?("October 15")
     assert !parser.is_date_range?("09/12/2012")
+    assert !parser.is_date_range?("I am working until next October")
   end
 
   def test_parse_date_range
