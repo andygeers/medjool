@@ -5,6 +5,7 @@ Gem::Specification.new do |s|
   s.name = 'medjool'
   s.version = Medjool::VERSION
   #s.rubyforge_project = 'medjool'
+  s.license = 'MIT'
   s.summary     = 'Date parsing with context'
   s.description = 'Medjool is a date parser written in pure Ruby, which processes dates within a context.'
   s.authors  = ['Andy Geers']
