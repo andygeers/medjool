@@ -37,6 +37,9 @@ class TestMedjool < TestCase
   def test_ordinal_only
     assert_equal "2013-09-01".to_date, Medjool.parse("1st", {:now => "2013-08-23".to_date})
     assert_equal "2013-08-01".to_date, Medjool.parse("1st", {:now => "2013-08-01".to_date})
+
+    assert_equal "2013-10-31".to_date, Medjool.parse("31st", {:now => "2013-09-01".to_date})
+    assert_equal "2013-09-30".to_date, Medjool.parse("30th", {:now => "2013-09-01".to_date})
   end
 
   def test_day_only
@@ -69,12 +72,16 @@ class TestMedjool < TestCase
     assert_equal "2013-01-12".to_date, date_range.start_date
     assert_equal "2013-01-15".to_date, date_range.end_date
     assert parser.parse_date_range("October 15").nil?
-
   end
 
   def test_lone_numbers
     parser = Medjool::Parser.new
     assert_equal Date.parse("1st"), parser.parse("1")
     assert_equal Date.parse("2st"), parser.parse("2 ")
+  end
+
+  def test_invalid_dates
+    assert_equal nil, Medjool.parse("Blah")
+    assert_equal nil, Medjool.parse("31st February")
   end
 end

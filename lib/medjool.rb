@@ -1,5 +1,5 @@
 module Medjool
-  VERSION = '0.5.1'
+  VERSION = '0.5.2'
 
   require 'medjool/parser'
   require 'medjool/date_range'

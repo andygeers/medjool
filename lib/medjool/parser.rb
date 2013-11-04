@@ -38,7 +38,18 @@ class Medjool::Parser
         text = "#{text.strip}st"
       end
 
-      base_date = Date.parse(text)
+      begin
+        base_date = Date.parse(text)
+      rescue ArgumentError => e
+        # If Date.parse is used on the string "31st" during
+        # a month with only 30 days, it will explode
+        if Medjool::END_OF_MONTH_MATCHER.match(text)
+          # This is a little bit hacky, but switch to a date that will definitely work
+          base_date = Date.parse("#{text} January")
+        else
+          return nil
+        end
+      end
 
       unless @context[:now]
         # In the absence of context, always fall back on the default guess
