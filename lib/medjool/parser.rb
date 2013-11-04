@@ -33,6 +33,11 @@ class Medjool::Parser
 
   def parse(text, update_now = true)
     if Medjool::DATE_MATCHER.match(text)
+      if /^[0-9]$/.match(text.strip)
+        # Handle lone integers
+        text = "#{text}st"
+      end
+
       base_date = Date.parse(text)
 
       unless @context[:now]
