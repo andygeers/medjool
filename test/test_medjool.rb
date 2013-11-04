@@ -75,5 +75,6 @@ class TestMedjool < TestCase
   def test_lone_numbers
     parser = Medjool::Parser.new
     assert_equal Date.parse("1st"), parser.parse("1")
+    assert_equal Date.parse("2st"), parser.parse("2 ")
   end
 end

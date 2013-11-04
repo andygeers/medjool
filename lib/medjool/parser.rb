@@ -35,7 +35,7 @@ class Medjool::Parser
     if Medjool::DATE_MATCHER.match(text)
       if /^[0-9]$/.match(text.strip)
         # Handle lone integers
-        text = "#{text}st"
+        text = "#{text.strip}st"
       end
 
       base_date = Date.parse(text)
