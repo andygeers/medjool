@@ -33,9 +33,13 @@ class Medjool::Parser
 
   def parse(text, update_now = true)
     if Medjool::DATE_MATCHER.match(text)
-      if /^[0-9]$/.match(text.strip)
+      # Let's do an aggressive strip of any whitespace at the start and end, including crazy unicodeness
+      # that the standard 'strip' would miss
+      text = text.gsub(/^[^a-zA-Z0-9]*/, "").gsub(/[^a-zA-Z0-9]*$/, "")
+
+      if /^[0-9]$/.match(text)
         # Handle lone integers
-        text = "#{text.strip}st"
+        text = "#{text}st"
       end
 
       begin

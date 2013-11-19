@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'helper'
 
 class TestMedjool < TestCase
@@ -58,6 +60,7 @@ class TestMedjool < TestCase
     parser = Medjool::Parser.new
     assert parser.is_date_range?("October")
     assert parser.is_date_range?("12-15 Jan")
+    assert parser.is_date_range?("12–15 Jan")
     assert !parser.is_date_range?("October 15")
     assert !parser.is_date_range?("09/12/2012")
     assert !parser.is_date_range?("I am working until next October")
@@ -83,5 +86,10 @@ class TestMedjool < TestCase
   def test_invalid_dates
     assert_equal nil, Medjool.parse("Blah")
     assert_equal nil, Medjool.parse("31st February")
+  end
+
+  def test_crazy_unicode_junk
+    parser = Medjool::Parser.new
+    assert parser.parse("￼3")
   end
 end
