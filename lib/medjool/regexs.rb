@@ -1,12 +1,12 @@
 # encoding: utf-8
 
 module Medjool
-  DAYNAME_MATCHER = /(\s*Mon(day)?,?\s*|\s*Tue(s(day)?)?,?\s*|\s*Wed(nesday)?,?\s*|\s*Thu(r(s(day)?)?)?,?\s*|\s*Fri(day)?,?\s*|\s*Sat(urday)?,?\s*|\s*Sun(day)?,?\s*)([^a-zA-Z]|$)/
-  MONTH_NAME_MATCHER = /(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|June?|July?|Aug(ust)?|Sept(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)([^a-zA-Z]|$)/
+  DAYNAME_MATCHER = /(\s*Mon(day)?,?\s*|\s*Tue(s(day)?)?,?\s*|\s*Wed(nesday)?,?\s*|\s*Thu(r(s(day)?)?)?,?\s*|\s*Fri(day)?,?\s*|\s*Sat(urday)?,?\s*|\s*Sun(day)?,?\s*)([^a-zA-Z]|$)/i
+  MONTH_NAME_MATCHER = /(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|June?|July?|Aug(ust)?|Sept(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)([^a-zA-Z]|$)/i
   MONTH_MATCHER = /\s*#{MONTH_NAME_MATCHER},?\s*/
   YYYY_MM_DD_MATCHER = /(\s*[0-9]{4}-[0-9]{2}-[0-9]{2}\s*)/
   DM_DM_YYYY_MATCHER = /(\s*[0-9]{2}[-\/][0-9]{2}[-\/][0-9]{2,4}\s*)/
-  ORDINAL_POSTFIX = /(st|rd|nd|th)/
+  ORDINAL_POSTFIX = /(st|rd|nd|th)/i
   ORDINAL_MATCHER = /(\s*([0-9]{1,2}#{ORDINAL_POSTFIX}?),?\s*)/
   END_OF_MONTH_MATCHER = /^\s*(29|30|31)#{ORDINAL_POSTFIX}?\s*$/
   YEAR_MATCHER = /(\s*([0-9]{4}\s*|\s*'?[0-9]{2}),?\s*)/

@@ -15,7 +15,7 @@ class TestMedjool < TestCase
 
   def test_parse_without_context
     @variations = ["*Monday", "1st July", "2nd July 2010", "1 July 2009", "Monday 2nd July 2009", "Monday 2nd", "Monday 2", "Monday 2 July",
-                  "Tue", "Tues", "Tuesday", "Wed", "Wednesday", "Thu", "Thur", "Thurs", "Thursday", "Fri", "Friday-"]
+                  "Tue", "Tues", "tuesday", "Tuesday", "Wed", "Wednesday", "Thu", "Thur", "Thurs", "Thursday", "Fri", "Friday-"]
     @variations.each do |t|
       assert_equal Date.parse(t), Medjool.parse(t), "Error parsing '#{t}'"
     end
