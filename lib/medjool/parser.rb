@@ -14,7 +14,7 @@ class Medjool::Parser
 
   def parse_date_range(text)
     if bits = Medjool::DATE_RANGE_MATCHER.match(text.strip)
-      if bits[16]
+      if bits[51]
         # October
         if month_start = self.parse(text.strip, update_now = false)
           month_end = month_start.end_of_month
@@ -23,9 +23,21 @@ class Medjool::Parser
       elsif bits[2]
         # 12-15 Oct
         # Start is 12 Oct
-        range_start = self.parse("#{bits[3]} #{bits[5]}", update_now = false)
+        end_month = bits[16]
+        start_month = bits[5] || end_month
+        range_start = self.parse("#{bits[3]} #{start_month}", update_now = false)
         # End is 15 Oct
-        range_end = self.parse("#{bits[4]} #{bits[5]}", update_now = false)
+        range_end = self.parse("#{bits[15]} #{end_month}", update_now = false)
+        return Medjool::DateRange.new(range_start, range_end)
+      elsif bits[28]
+        # Oct 12-15
+        # Start is 12 Oct
+        end_month = bits[40]
+        start_month = bits[28] || end_month
+
+        range_start = self.parse("#{bits[38]} #{start_month}", update_now = false)
+        # End is 15 Oct
+        range_end = self.parse("#{bits[50]} #{end_month}", update_now = false)
         return Medjool::DateRange.new(range_start, range_end)
       end
     end

@@ -66,6 +66,9 @@ class TestMedjool < TestCase
     assert parser.is_date_range?("October")
     assert parser.is_date_range?("12-15 Jan")
     assert parser.is_date_range?("12–15 Jan")
+    assert parser.is_date_range?("12 – 15 Jan")
+    assert parser.is_date_range?("28 January – 3 February")
+    assert parser.is_date_range?("AUGUST 12-15")
     assert !parser.is_date_range?("October 15")
     assert !parser.is_date_range?("09/12/2012")
     assert !parser.is_date_range?("I am working until next October")
@@ -79,6 +82,10 @@ class TestMedjool < TestCase
     date_range = parser.parse_date_range("12-15 Jan")
     assert_equal "2013-01-12".to_date, date_range.start_date
     assert_equal "2013-01-15".to_date, date_range.end_date
+    date_range = parser.parse_date_range("28 Jan-3 Feb")
+    assert_equal "2013-01-28".to_date, date_range.start_date
+    assert_equal "2013-02-03".to_date, date_range.end_date
+
     assert parser.parse_date_range("October 15").nil?
   end
 
