@@ -5,6 +5,7 @@ end
 
 require 'minitest'
 require 'minitest/autorun'
+require 'active_support'
 require 'active_support/core_ext/string'
 require 'timecop'
 
