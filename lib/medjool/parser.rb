@@ -150,6 +150,9 @@ class Medjool::Parser
     elsif data_present[:day_name] && !data_present[:month]
       # Tuesday
       return :weekly
+    elsif data_present[:month]
+      # October
+      return :yearly
     else
       # Unknown
       return nil

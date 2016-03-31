@@ -75,16 +75,19 @@ class TestMedjool < TestCase
   end
 
   def test_parse_date_range
-    parser = Medjool::Parser.new
+    parser = Medjool::Parser.new(:now => "2013-08-01".to_datetime)
     date_range = parser.parse_date_range("October")
+    assert date_range, "Could not parse input as date range"
     assert_equal "2013-10-01".to_date, date_range.start_date
     assert_equal "2013-10-31".to_date, date_range.end_date
     date_range = parser.parse_date_range("12-15 Jan")
-    assert_equal "2013-01-12".to_date, date_range.start_date
-    assert_equal "2013-01-15".to_date, date_range.end_date
+    assert date_range, "Could not parse input as date range"
+    assert_equal "2014-01-12".to_date, date_range.start_date
+    assert_equal "2014-01-15".to_date, date_range.end_date
     date_range = parser.parse_date_range("28 Jan-3 Feb")
-    assert_equal "2013-01-28".to_date, date_range.start_date
-    assert_equal "2013-02-03".to_date, date_range.end_date
+    assert date_range, "Could not parse input as date range"
+    assert_equal "2014-01-28".to_date, date_range.start_date
+    assert_equal "2014-02-03".to_date, date_range.end_date
 
     assert parser.parse_date_range("October 15").nil?
   end
