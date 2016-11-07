@@ -13,5 +13,5 @@ module Medjool
   TEXT_DATE_MATCHER = /(#{DAYNAME_MATCHER}|#{ORDINAL_MATCHER}|#{YEAR_MATCHER}|#{MONTH_MATCHER}([^a-zA-Z]|$))/
   DATE_MATCHER = /^[^a-zA-Z0-9]*(#{TEXT_DATE_MATCHER}+|#{DM_DM_YYYY_MATCHER}|#{YYYY_MM_DD_MATCHER})/
 
-  DATE_RANGE_MATCHER = /^((([0-9]+)( #{MONTH_NAME_MATCHER})? ?[-–] ?([0-9]+) #{MONTH_NAME_MATCHER}([^a-zA-Z]|$))|(#{MONTH_NAME_MATCHER} ([0-9]+) ?[-–] ?(#{MONTH_NAME_MATCHER} )?([0-9]+))|#{MONTH_NAME_MATCHER}([^a-zA-Z]|$))$/
+  DATE_RANGE_MATCHER = /^([^:]+: )?((([0-9]+)( #{MONTH_NAME_MATCHER})? ?[-–] ?([0-9]+) #{MONTH_NAME_MATCHER}([^a-zA-Z]|$))|(#{MONTH_NAME_MATCHER} ([0-9]+) ?[-–] ?(#{MONTH_NAME_MATCHER} )?([0-9]+))|#{MONTH_NAME_MATCHER}([^a-zA-Z]|$))$/
 end

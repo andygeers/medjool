@@ -15,31 +15,37 @@ class Medjool::Parser
 
   def parse_date_range(text)
     if bits = Medjool::DATE_RANGE_MATCHER.match(text.strip)
-      if bits[51]
+      if bits[1].present?
+        prefix = bits[1].strip.sub(/:$/, '')
+      else
+        prefix = nil
+      end
+
+      if bits[52]
         # October
         if month_start = self.parse(text.strip, update_now = false)
           month_end = month_start.end_of_month
-          return Medjool::DateRange.new(month_start, month_end)
+          return Medjool::DateRange.new(month_start, month_end, prefix)
         end
-      elsif bits[2]
+      elsif bits[3]
         # 12-15 Oct
         # Start is 12 Oct
-        end_month = bits[16]
-        start_month = bits[5] || end_month
-        range_start = self.parse("#{bits[3]} #{start_month}", update_now = false)
+        end_month = bits[17]
+        start_month = bits[6] || end_month
+        range_start = self.parse("#{bits[4]} #{start_month}", update_now = false)
         # End is 15 Oct
-        range_end = self.parse("#{bits[15]} #{end_month}", update_now = false)
-        return Medjool::DateRange.new(range_start, range_end)
-      elsif bits[28]
+        range_end = self.parse("#{bits[16]} #{end_month}", update_now = false)
+        return Medjool::DateRange.new(range_start, range_end, prefix)
+      elsif bits[29]
         # Oct 12-15
         # Start is 12 Oct
-        end_month = bits[40]
-        start_month = bits[28] || end_month
+        end_month = bits[41]
+        start_month = bits[29] || end_month
 
-        range_start = self.parse("#{bits[38]} #{start_month}", update_now = false)
+        range_start = self.parse("#{bits[39]} #{start_month}", update_now = false)
         # End is 15 Oct
-        range_end = self.parse("#{bits[50]} #{end_month}", update_now = false)
-        return Medjool::DateRange.new(range_start, range_end)
+        range_end = self.parse("#{bits[51]} #{end_month}", update_now = false)
+        return Medjool::DateRange.new(range_start, range_end, prefix)
       end
     end
   end

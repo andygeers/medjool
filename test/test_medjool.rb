@@ -68,6 +68,7 @@ class TestMedjool < TestCase
     assert parser.is_date_range?("12–15 Jan")
     assert parser.is_date_range?("12 – 15 Jan")
     assert parser.is_date_range?("28 January – 3 February")
+    assert parser.is_date_range?("Hanging out: 28 January – 3 February")
     assert parser.is_date_range?("AUGUST 12-15")
     assert !parser.is_date_range?("October 15")
     assert !parser.is_date_range?("09/12/2012")
@@ -80,16 +81,28 @@ class TestMedjool < TestCase
     assert date_range, "Could not parse input as date range"
     assert_equal "2013-10-01".to_date, date_range.start_date
     assert_equal "2013-10-31".to_date, date_range.end_date
+    assert_nil date_range.prefix
     date_range = parser.parse_date_range("12-15 Jan")
     assert date_range, "Could not parse input as date range"
     assert_equal "2014-01-12".to_date, date_range.start_date
     assert_equal "2014-01-15".to_date, date_range.end_date
+    assert_nil date_range.prefix
     date_range = parser.parse_date_range("28 Jan-3 Feb")
     assert date_range, "Could not parse input as date range"
     assert_equal "2014-01-28".to_date, date_range.start_date
     assert_equal "2014-02-03".to_date, date_range.end_date
+    assert_nil date_range.prefix
 
     assert parser.parse_date_range("October 15").nil?
+  end
+
+  def test_parse_date_range_with_prefix
+    parser = Medjool::Parser.new(:now => "2013-08-01".to_datetime)
+    date_range = parser.parse_date_range("Living the dream: 12-15 Jan")
+    assert date_range, "Could not parse input as date range"
+    assert_equal "2014-01-12".to_date, date_range.start_date
+    assert_equal "2014-01-15".to_date, date_range.end_date
+    assert_equal "Living the dream", date_range.prefix
   end
 
   def test_lone_numbers
