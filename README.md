@@ -22,6 +22,14 @@ To run the tests, type:
   rake test
 ```
 
+Deploying
+=========
+
+```
+  gem build medjool
+  gem push medjool-[version].gem
+```
+
 License
 =======
 Medjool is licensed under an MIT license.
