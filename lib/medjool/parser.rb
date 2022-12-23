@@ -74,10 +74,22 @@ class Medjool::Parser
         end
       end
 
-      unless @context[:now]
+      should_determine_ambiguity = false
+      if @context[:now]
+        should_determine_ambiguity = true
+      else
         # In the absence of context, always fall back on the default guess
         guess_date = base_date
-      else
+
+        # Only exception for that is the special case where it's currently December,
+        # and "January" *obviouly* should mean January NEXT year not THIS year
+        if Date.today.month == 12 && guess_date < 10.months.ago          
+          should_determine_ambiguity = true
+          @context[:now] = Date.today
+        end
+      end
+
+      if should_determine_ambiguity
         # Determine the ambiguity level for this data
         ambiguity = determine_ambiguity(text)
 

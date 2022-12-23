@@ -2,6 +2,22 @@
 
 require 'helper'
 
+class TestMedjoolInDecember < TestCase
+
+  def setup
+    # 23rd December 2013
+    Timecop.freeze("2022-12-23".to_date)
+  end
+
+  def teardown
+    Timecop.return
+  end
+
+  def test_january_date_in_december
+    assert_equal "2023-01-01".to_date, Medjool.parse("January 1st")
+  end
+end
+
 class TestMedjool < TestCase
 
   def setup
@@ -17,7 +33,8 @@ class TestMedjool < TestCase
     @variations = ["*Monday", "1st July", "2nd July 2010", "1 July 2009", "Monday 2nd July 2009", "Monday 2nd", "Monday 2", "Monday 2 July",
                   "Tue", "Tues", "tuesday", "Tuesday", "Wed", "Wednesday", "Thu", "Thur", "Thurs", "Thursday", "Fri", "Friday-"]
     @variations.each do |t|
-      assert_equal Date.parse(t), Medjool.parse(t), "Error parsing '#{t}'"
+      stripped_date = t.sub(/[*-]/, "")
+      assert_equal Date.parse(stripped_date), Medjool.parse(t), "Error parsing '#{t}'"
     end
   end
 
